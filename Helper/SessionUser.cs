@@ -3,10 +3,10 @@ using valmet_cadastro_item.Models;
 
 namespace valmet_cadastro_item.Helper
 {
-    public class Session : ISession
+    public class SessionUser : ISessionUser
     {
         private readonly IHttpContextAccessor _contextAccessor;
-        public Session(HttpContextAccessor contextAccessor)
+        public SessionUser(IHttpContextAccessor contextAccessor)
         {
             _contextAccessor=contextAccessor;
         }

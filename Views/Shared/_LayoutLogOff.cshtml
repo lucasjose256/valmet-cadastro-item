@@ -10,16 +10,21 @@
 </head>
 <body>
     <header>
-       
+        <div class="container">
+          
+                <img src="@Url.Content("~/Images/valmet.png")" style="height: 80px; width: auto; margin-right: 10px;" />
+
+      
     </header>
+    <br />
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
-
+    <br />
     <footer class="border-top footer text-muted">
-        <div class="container">
+      
             &copy; 2024 - valmet_cadastro_item - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>

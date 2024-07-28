@@ -6,6 +6,11 @@
 }
 
 @model UserModel
+
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+</head>
 <h1>Master</h1>
 
 
@@ -30,19 +35,18 @@
     </div>
     <div class="form-group">
         <label asp-for="Password" class="control-label"></label>
-        <input asp-for="Password" type="password" class="form-control" />
+        <div class="input-group">
+            <input asp-for="Password" type="password" class="form-control" id="passwordInput" />
+            <div class="input-group-append">
+                <button class="btn btn-outline-secondary" type="button" id="togglePassword">
+                    <i class="fas fa-eye"></i>
+                </button>
+            </div>
+        </div>
         <span asp-validation-for="Password" class="text-danger"></span>
     </div>
-    <div class="form-group">
-        <label asp-for="DateRegister" class="control-label"></label>
-        <input asp-for="DateRegister" type="datetime-local" class="form-control" />
-        <span asp-validation-for="DateRegister" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="DateUpdate" class="control-label"></label>
-        <input asp-for="DateUpdate" type="datetime-local" class="form-control" />
-        <span asp-validation-for="DateUpdate" class="text-danger"></span>
-    </div>
+
+  
     <button type="submit" class="btn btn-primary">Save</button>
 </form>
 
@@ -65,4 +69,18 @@
             });
         }, false);
     })();
+
+  
+        document.getElementById('togglePassword').addEventListener('click', function (e) {
+            // toggle the type attribute
+            const passwordInput = document.getElementById('passwordInput');
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+
+            // toggle the eye slash icon
+            this.querySelector('i').classList.toggle('fa-eye');
+            this.querySelector('i').classList.toggle('fa-eye-slash');
+        });
+
+
 </script>

@@ -2,7 +2,7 @@
 
 namespace valmet_cadastro_item.Helper
 {
-    public interface ISession
+    public interface ISessionUser
     {
         void CreateUserSession(UserModel usuario);
 

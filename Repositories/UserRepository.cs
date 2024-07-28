@@ -39,7 +39,7 @@ namespace valmet_cadastro_item.Repositories
 
         public UserModel SearchForEmail(string email)
         {
-            throw new NotImplementedException();
+            return _context.Usuarios.FirstOrDefault(x => x.Email.ToUpper() == email.ToUpper());
         }
 
         public UserModel SearchForId(int id)

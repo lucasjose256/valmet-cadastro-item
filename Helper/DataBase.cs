@@ -10,7 +10,8 @@ namespace valmet_cadastro_item.Helper
 
         public DbSet<UserModel> Usuarios { get; set; }
 
-
+     //Criar essa tabela depois
+     //public DbSet<UserModel> Items { get; set; }
     }
 
 }

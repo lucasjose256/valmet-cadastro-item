@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using valmet_cadastro_item.Helper;
 using valmet_cadastro_item.Repositories;
@@ -12,8 +13,14 @@ builder.Services.AddDbContext<DataBase>(options => {
     options.UseSqlServer(connetionString);
 });
 // Add services to the container.
-
+builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<ISessionUser, SessionUser>();
+
+builder.Services.AddSession(o => {
+    o.Cookie.HttpOnly = true;
+    o.Cookie.IsEssential = true;
+});
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -30,6 +37,7 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
+app.UseSession();
 
 app.MapControllerRoute(
     name: "default",

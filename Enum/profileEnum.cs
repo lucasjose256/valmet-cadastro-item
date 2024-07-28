@@ -2,9 +2,9 @@
 {
     public enum ProfileEnum
     {
-        Maneger = 1,//Gerencial
-        Classifier = 2,//Classificador
-        Requester = 3, //Requisitante
-        Mester = 4,//Mestre
+        Gerencial = 1,//Gerencial
+        Classificador = 2,//Classificador
+        Requisitante = 3, //Requisitante
+        Mestre = 4,//Mestre
     }
 }
