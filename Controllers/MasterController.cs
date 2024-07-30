@@ -1,9 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using valmet_cadastro_item.Filters;
 using valmet_cadastro_item.Models;
 using valmet_cadastro_item.Repositories;
 
 namespace valmet_cadastro_item.Controllers
 {
+    [MasterPage]
+
     public class MasterController : Controller
     {
         private readonly IUserRepository _userRepository;
@@ -19,6 +22,38 @@ namespace valmet_cadastro_item.Controllers
         {
             return View();
         }
+
+       
+        public IActionResult Edit(int id)
+        {
+
+            try
+            {
+                UserModel model = _userRepository.SearchForId(id);
+                if (ModelState.IsValid)
+                {  
+                    model = _userRepository.Update(model);
+                    TempData["SuccessMessage"] = "User created successfully!";
+                    return View(model);
+                }
+                //Criar uma tela de erro
+                return RedirectToAction("Index", "Restrict");
+            }
+            catch (Exception ex)
+            {
+                //Criar uma tela de erro
+                return RedirectToAction("Index","Restrict");
+
+            }
+        }
+
+        public IActionResult Delete(int id)
+        {
+            _userRepository.Delete(id);
+            return View("Index");
+        }
+
+
         public IActionResult Table()
         {
             List<UserModel> users = _userRepository.GetAllUsers();

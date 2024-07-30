@@ -1,9 +1,11 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using valmet_cadastro_item.Filters;
 using valmet_cadastro_item.Models;
 
 namespace valmet_cadastro_item.Controllers
 {
+    [UserLogedPage]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;

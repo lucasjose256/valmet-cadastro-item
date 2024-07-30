@@ -14,6 +14,7 @@ namespace valmet_cadastro_item.Repositories
         public UserModel Add(UserModel user)
         {
             user.DateRegister = DateTime.Now;
+            user.SetHash();
             _context.Usuarios.Add(user);
             _context.SaveChanges();
             return user;
@@ -44,12 +45,23 @@ namespace valmet_cadastro_item.Repositories
 
         public UserModel SearchForId(int id)
         {
-            throw new NotImplementedException();
+            return _context.Usuarios.FirstOrDefault(x => x.Id == id);
         }
 
         public UserModel Update(UserModel usuario)
         {
-            throw new NotImplementedException();
+            UserModel usuarioDB = SearchForId(usuario.Id);
+
+            if (usuarioDB == null) throw new Exception("Houve um erro na atualização");
+
+            usuarioDB.Name = usuario.Name;
+
+            usuarioDB.Email = usuario.Email;
+            usuarioDB.Perfil = usuario.Perfil;
+            usuarioDB.DateUpdate = DateTime.Now;
+            _context.Usuarios.Update(usuarioDB);
+            _context.SaveChanges();
+            return usuarioDB;
         }
     }
 }

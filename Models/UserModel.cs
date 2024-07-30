@@ -1,5 +1,5 @@
 ﻿using valmet_cadastro_item.Enums;
-
+using valmet_cadastro_item.Helper;
 namespace valmet_cadastro_item.Models
 {
     public class UserModel
@@ -16,11 +16,15 @@ namespace valmet_cadastro_item.Models
         public bool SenhaValida(string password)
         {
 
-            return Password == password;
+            return Password == password.CreateHash();
 
         }
 
+        public void SetHash()
+        {
 
+            Password = Password.CreateHash();
+        }
 
 
     }
