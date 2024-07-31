@@ -43,7 +43,7 @@ namespace valmet_cadastro_item.Controllers
                         return View("Index");
                     }
 
-                    if (user.Password != loginModel.Password)
+                    if (user.Password != loginModel.Password.CreateHash())
                     {
                         TempData["ErrorMessage"] = "Senha incorreta.";
                         return View("Index");

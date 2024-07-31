@@ -46,11 +46,19 @@ namespace valmet_cadastro_item.Controllers
 
             }
         }
+        [HttpPost]
+        public IActionResult Update(UserModel model)
+        {
 
+             _userRepository.Update(model);
+            return RedirectToAction("Index");
+
+        }
+    
         public IActionResult Delete(int id)
         {
             _userRepository.Delete(id);
-            return View("Index");
+            return RedirectToAction("Table");
         }
 
 
@@ -66,9 +74,15 @@ namespace valmet_cadastro_item.Controllers
         {
             if (ModelState.IsValid)
             {
-                model = _userRepository.Add(model);
-                TempData["SuccessMessage"] = "User created successfully!";
-                return RedirectToAction("Index");
+              
+                if (_userRepository.SearchForEmail(model.Email) == null)
+                {
+                    model = _userRepository.Add(model);
+                    TempData["SuccessMessage"] = "Usuário cadastrado com sucesso!";
+                    return RedirectToAction("Index");
+
+                }
+                TempData["ErrorMessage"] = "Esse Email já está cadastrado!";
             }
             return View(model);
         }
