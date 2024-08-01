@@ -9,10 +9,12 @@ namespace valmet_cadastro_item.Controllers
     {
         private readonly IUserRepository _userRepository;
         private readonly ISessionUser _session;
-        public LoginController(IUserRepository userRepository, ISessionUser session)
+        private readonly ISmtpRepository _smtpRepository;
+        public LoginController(IUserRepository userRepository, ISessionUser session, ISmtpRepository smtpRepository)
         {
             _userRepository = userRepository;
             _session = session;
+            _smtpRepository = smtpRepository;
         }
         public IActionResult Index()
         {
@@ -23,6 +25,24 @@ namespace valmet_cadastro_item.Controllers
             
             return View();
         }
+        [HttpPost]
+            public IActionResult Email()
+        {
+            try
+            {
+                _smtpRepository.SendEmail("lucasjose256@gmail.com", "O SERVIDOR SMPT ESTA FUNCIONANDO", "SERVIDOR");
+                TempData["SucessMessage"] = "DEU TUDO CEROT";
+                return RedirectToAction("Index", "Home");
+            }
+
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = "AALGO DEU ERRADO AO ENVIAR O EMAIL";
+                return RedirectToAction("Index", "Restrict");
+            }
+         
+        }
+
         public IActionResult LogOff() {
             _session.RemovoUserSession();
             return RedirectToAction("Index", "Login");

@@ -16,7 +16,7 @@ builder.Services.AddDbContext<DataBase>(options => {
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<ISessionUser, SessionUser>();
-
+builder.Services.AddScoped<ISmtpRepository,SmptRepository>();
 builder.Services.AddSession(o => {
     o.Cookie.HttpOnly = true;
     o.Cookie.IsEssential = true;
