@@ -11,21 +11,45 @@
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
 }
-
-<h1>Minha Tela de Login</h1>
-
-<form asp-controller="Login" asp-action="Entrar" method="post">
-    <div class="form-group">
-        <label for="exampleInputEmail1">Email address</label>
-        <input type="email" class="form-control" asp-for="Email" aria-describedby="emailHelp" placeholder="Enter email">
-        @Html.ValidationMessageFor(x => x.Email)
+<header>
+    <link href="~/css/login.css" rel="stylesheet" type="text/css" />
+</header>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+                <div class="card border-0 shadow rounded-3 my-5">
+                    <div class="card-body p-4 p-sm-5">
+                        <div class="text-center mb-4">
+                            <img src="@Url.Content("~/Images/valmet.png")" class="img-fluid" style="height: 80px; width: auto;" />
+                        </div>
+                        <h5 class="card-title text-center mb-5 fw-light fs-5">Sistemas de Cadastro de Itens</h5>
+                        <form asp-controller="Login" asp-action="Entrar" method="post">
+                            <div class="form-floating mb-3">
+                                <input type="email" class="form-control" asp-for="Email" aria-describedby="emailHelp" placeholder="Enter email" id="floatingInput">
+                                @Html.ValidationMessageFor(x => x.Email)
+                                <label for="floatingInput">Email address</label>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input type="password" class="form-control" asp-for="Password" placeholder="Password">
+                                @Html.ValidationMessageFor(x => x.Password)
+                                <label for="floatingPassword">Password</label>
+                            </div>
+                            <div class="form-check mb-3">
+                                <input class="form-check-input" type="checkbox" value="" id="rememberPasswordCheck">
+                                <label class="form-check-label" for="rememberPasswordCheck">
+                                    Lembrar da Senha
+                                </label>
+                            </div>
+                            <div class="d-grid">
+                                <button class="btn btn-primary btn-login text-uppercase fw-bold" type="submit">
+                                    Entrar
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <br />
-    <div class="form-group">
-        <label for="exampleInputPassword1">Password</label>
-        <input type="password" class="form-control" asp-for="Password" placeholder="Password">
-        @Html.ValidationMessageFor(x => x.Password)
-    </div>
-    <br />
-    <button type="submit" class="btn btn-primary">Submit</button>
-</form>
+</body>
