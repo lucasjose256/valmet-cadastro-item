@@ -2,6 +2,7 @@
 using valmet_cadastro_item.Helper;
 using valmet_cadastro_item.Models;
 using valmet_cadastro_item.Repositories;
+using valmet_cadastro_item.smtp;
 
 namespace valmet_cadastro_item.Controllers
 {
@@ -9,12 +10,15 @@ namespace valmet_cadastro_item.Controllers
     {
         private readonly IUserRepository _userRepository;
         private readonly ISessionUser _session;
-        private readonly ISmtpRepository _smtpRepository;
-        public LoginController(IUserRepository userRepository, ISessionUser session, ISmtpRepository smtpRepository)
+        private readonly IEmailSender emailSender;
+        private string sendKey;
+
+        public LoginController(IUserRepository userRepository, ISessionUser session, IEmailSender emailSender)
         {
+            this.emailSender = emailSender;
             _userRepository = userRepository;
             _session = session;
-            _smtpRepository = smtpRepository;
+
         }
         public IActionResult Index()
         {
@@ -22,25 +26,14 @@ namespace valmet_cadastro_item.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
-            
+
             return View();
         }
         [HttpPost]
-            public IActionResult Email()
+        public async Task<IActionResult> SendEmail(string email, string subject, string message)
         {
-            try
-            {
-                _smtpRepository.SendEmail("lucasjose256@gmail.com", "O SERVIDOR SMPT ESTA FUNCIONANDO", "SERVIDOR");
-                TempData["SucessMessage"] = "DEU TUDO CEROT";
-                return RedirectToAction("Index", "Home");
-            }
-
-            catch (Exception ex)
-            {
-                TempData["ErrorMessage"] = "AALGO DEU ERRADO AO ENVIAR O EMAIL";
-                return RedirectToAction("Index", "Restrict");
-            }
-         
+            await emailSender.SendEmailAsync(email, subject, message);
+            return View();
         }
 
         public IActionResult LogOff() {
@@ -81,6 +74,31 @@ namespace valmet_cadastro_item.Controllers
                 TempData["ErrorMessage"] = "Ops! Ocorreu algum erro de exceção.";
                 return View("Index");
             }
+        }
+
+        public IActionResult Retrieve()
+        {
+            return View();
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> Retrieve(LoginModel loginModel)
+        {
+            var user = _userRepository.SearchForEmail(loginModel.Email);
+
+            if (user == null)
+            {
+                TempData["ErrorMessage"] = "Usuário não foi encontrado.";
+                return View("Retrieve");
+            }
+            var sendKey = PasswordGenerate.generate();
+            user.Password = PasswordHasher.CreateHash(sendKey);
+            _userRepository.Update(user);
+            await emailSender.SendEmailAsync(loginModel.Email, "Sua nova senha foi gerada com sucesso, detalhes de login abaixo:", "\nUser: " + loginModel.Email + "\nPassword: " + sendKey);
+
+            TempData["SuccessMessage"] = "Uma nova senha de acesso foi enviado para seu email.";
+            return View("Retrieve");
         }
 
     }

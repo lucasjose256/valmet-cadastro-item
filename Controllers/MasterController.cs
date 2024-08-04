@@ -1,7 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using valmet_cadastro_item.Filters;
+using valmet_cadastro_item.smtp;
 using valmet_cadastro_item.Models;
 using valmet_cadastro_item.Repositories;
+using valmet_cadastro_item.Helper;
+using Microsoft.EntityFrameworkCore.Query;
 
 namespace valmet_cadastro_item.Controllers
 {
@@ -10,9 +13,12 @@ namespace valmet_cadastro_item.Controllers
     public class MasterController : Controller
     {
         private readonly IUserRepository _userRepository;
-        public MasterController(IUserRepository userRepository)
+        private readonly IEmailSender emailSender;
+        private string sendKey;
+        public MasterController(IUserRepository userRepository, IEmailSender emailSender)
         {
             _userRepository = userRepository;
+            this.emailSender = emailSender;
         }
         public IActionResult Index()
         {
@@ -69,16 +75,22 @@ namespace valmet_cadastro_item.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(UserModel model)
+        public async Task<IActionResult> Create(UserModel model)
             //Verificar o campo da senha q ele apaga.
         {
+            sendKey = PasswordGenerate.generate();
+            model.Password = sendKey;
             if (ModelState.IsValid)
             {
               
                 if (_userRepository.SearchForEmail(model.Email) == null)
                 {
                     model = _userRepository.Add(model);
+
                     TempData["SuccessMessage"] = "Usuário cadastrado com sucesso!";
+                    //await SendEmail(model.Email);
+                    string email = model.Email;
+                    await emailSender.SendEmailAsync(email, "Sua conta foi criada com sucesso e você já pode acessar a plataforma. Abaixo estão suas informações de login:", "\nUsuário: " + email + "\nSenha: " + sendKey);
                     return RedirectToAction("Index");
 
                 }
@@ -86,5 +98,11 @@ namespace valmet_cadastro_item.Controllers
             }
             return View(model);
         }
+
+        /*public async Task<IActionResult> Create(UserModel model)
+        {
+            return View();
+        }*/
+
     }
 }

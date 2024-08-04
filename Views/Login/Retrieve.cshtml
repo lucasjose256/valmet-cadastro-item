@@ -1,7 +1,7 @@
 ﻿@model LoginModel
 @{
     Layout = "_LayoutLogOff";
-    ViewData["Title"] = "Login";
+    ViewData["Title"] = "Retrieve Password";
 }
 
 @if (TempData["ErrorMessage"] != null)
@@ -12,24 +12,24 @@
     </div>
 }
 
-<h1>Minha Tela de Login</h1>
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        @TempData["SuccessMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
 
-<form asp-controller="Login" asp-action="Entrar" method="post">
+<h1>Recuperar Senha</h1>
+
+<a asp-controller="Login" asp-action="Index" class="btn btn-secondary mb-3">Voltar ao Login</a>
+
+<form asp-controller="Login" asp-action="Retrieve" method="post">
     <div class="form-group">
         <label for="exampleInputEmail1">Email address</label>
         <input type="email" class="form-control" asp-for="Email" aria-describedby="emailHelp" placeholder="Enter email">
         @Html.ValidationMessageFor(x => x.Email)
     </div>
     <br />
-    <div class="form-group">
-        <label for="exampleInputPassword1">Password</label>
-        <input type="password" class="form-control" asp-for="Password" placeholder="Password">
-        @Html.ValidationMessageFor(x => x.Password)
-    </div>
-    <br />
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <button type="submit" class="btn btn-primary">Retrieve Password</button>
 </form>
-
-<br />
-
-<a asp-controller="Login" asp-action="Retrieve" class="btn btn-link">Esqueci minha senha.</a>
