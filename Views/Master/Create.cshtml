@@ -1,11 +1,4 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-    ViewData["Title"] = "Create User";
-}
-
-@model UserModel
+﻿@model UserModel
 @if (TempData["ErrorMessage"] != null)
 {
     <div class="alert alert-danger alert-dismissible fade show" role="alert">
@@ -16,11 +9,9 @@
 
 <head>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-
 </head>
+
 <h1>Master</h1>
-
-
 
 <h2>@ViewData["Title"]</h2>
 
@@ -40,33 +31,20 @@
         <select asp-for="Perfil" class="form-control" asp-items="Html.GetEnumSelectList<valmet_cadastro_item.Enums.ProfileEnum>()"></select>
         <span asp-validation-for="Perfil" class="text-danger"></span>
     </div>
-    <div class="form-group">
-        <label asp-for="Password" class="control-label"></label>
-        <div class="input-group">
-            <input asp-for="Password" type="password" class="form-control" id="passwordInput" />
-            <div class="input-group-append">
-                <button class="btn btn-outline-secondary" type="button" id="togglePassword">
-                    <i class="fas fa-eye"></i>
-                </button>
-            </div>
-        </div>
-        <span asp-validation-for="Password" class="text-danger"></span>
-    </div>
 
-  
     <button type="submit" class="btn btn-primary">Save</button>
 </form>
 
 <script>
     // Example starter JavaScript for disabling form submissions if there are invalid fields
-    (function() {
+    (function () {
         'use strict';
-        window.addEventListener('load', function() {
+        window.addEventListener('load', function () {
             // Fetch all the forms we want to apply custom Bootstrap validation styles to
             var forms = document.getElementsByClassName('needs-validation');
             // Loop over them and prevent submission
-            var validation = Array.prototype.filter.call(forms, function(form) {
-                form.addEventListener('submit', function(event) {
+            var validation = Array.prototype.filter.call(forms, function (form) {
+                form.addEventListener('submit', function (event) {
                     if (form.checkValidity() === false) {
                         event.preventDefault();
                         event.stopPropagation();
@@ -77,17 +55,14 @@
         }, false);
     })();
 
-  
-        document.getElementById('togglePassword').addEventListener('click', function (e) {
-            // toggle the type attribute
-            const passwordInput = document.getElementById('passwordInput');
-            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-            passwordInput.setAttribute('type', type);
+    document.getElementById('togglePassword').addEventListener('click', function (e) {
+        // toggle the type attribute
+        const passwordInput = document.getElementById('passwordInput');
+        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordInput.setAttribute('type', type);
 
-            // toggle the eye slash icon
-            this.querySelector('i').classList.toggle('fa-eye');
-            this.querySelector('i').classList.toggle('fa-eye-slash');
-        });
-
-
+        // toggle the eye slash icon
+        this.querySelector('i').classList.toggle('fa-eye');
+        this.querySelector('i').classList.toggle('fa-eye-slash');
+    });
 </script>

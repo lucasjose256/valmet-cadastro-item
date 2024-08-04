@@ -55,6 +55,7 @@ namespace valmet_cadastro_item.Repositories
             if (usuarioDB == null) throw new Exception("Houve um erro na atualização");
 
             usuarioDB.Name = usuario.Name;
+            usuarioDB.Password = usuario.Password;
 
             usuarioDB.Email = usuario.Email;
             usuarioDB.Perfil = usuario.Perfil;
@@ -63,5 +64,7 @@ namespace valmet_cadastro_item.Repositories
             _context.SaveChanges();
             return usuarioDB;
         }
+
+
     }
 }

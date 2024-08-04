@@ -9,6 +9,8 @@ namespace valmet_cadastro_item.Repositories
         UserModel SearchForId(int id);
         UserModel Add(UserModel usuario);
         UserModel Update(UserModel usuario);
+
+        //UserModel RenewPassword(UserModel usuario, string key);
         bool Delete(int id);
     }
 }

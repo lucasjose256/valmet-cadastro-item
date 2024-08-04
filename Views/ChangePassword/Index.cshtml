@@ -1,0 +1,41 @@
+﻿@model ChangePasswordModel
+
+@{
+    Layout = "_LayoutLogOff";
+    ViewData["Title"] = "Change Password";
+}
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        @TempData["ErrorMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        @TempData["SuccessMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+<h1>Change Password</h1>
+
+<a href="/home" class="btn btn-secondary mb-3">Back to Home</a>
+
+<form asp-action="Index" method="post">
+    <div class="form-group">
+        <label for="newPassword">New Password</label>
+        <input type="password" class="form-control" id="newPassword" name="NewPassword" placeholder="Enter new password" required />
+        @Html.ValidationMessageFor(model => model.NewPassword)
+    </div>
+    <div class="form-group">
+        <label for="confirmPassword">Confirm Password</label>
+        <input type="password" class="form-control" id="confirmPassword" name="ConfirmPassword" placeholder="Confirm new password" required />
+        @Html.ValidationMessageFor(model => model.ConfirmPassword)
+    </div>
+    <br />
+    <button type="submit" class="btn btn-primary">Change Password</button>
+</form>

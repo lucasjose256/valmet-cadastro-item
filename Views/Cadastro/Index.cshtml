@@ -1,0 +1,80 @@
+﻿@model valmet_cadastro_item.Models.ItemModel
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        @TempData["ErrorMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+
+<h1>Cadastro de Itens</h1>
+
+<h2>@ViewData["Title"]</h2>
+
+<form asp-controller="Cadastro" asp-action="Create" method="post" class="needs-validation" enctype="multipart/form-data" novalidate>
+    <div class="form-group">
+        <label asp-for="Codigo" class="control-label"></label>
+        <input asp-for="Codigo" class="form-control" />
+        <span asp-validation-for="Codigo" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Descricao" class="control-label"></label>
+        <textarea asp-for="Descricao" class="form-control"></textarea>
+        <span asp-validation-for="Descricao" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Tipo" class="control-label"></label>
+        <input asp-for="Tipo" class="form-control" />
+        <span asp-validation-for="Tipo" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Grupo" class="control-label"></label>
+        <input asp-for="Grupo" class="form-control" />
+        <span asp-validation-for="Grupo" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Usuario" class="control-label"></label>
+        <input asp-for="Usuario" class="form-control" />
+        <span asp-validation-for="Usuario" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Data" class="control-label"></label>
+        <input asp-for="Data" class="form-control" />
+        <span asp-validation-for="Data" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Data_De_Baixa" class="control-label"></label>
+        <input asp-for="Data_De_Baixa" class="form-control" />
+        <span asp-validation-for="Data_De_Baixa" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Desenho" class="control-label"></label>
+        <input asp-for="Desenho" class="form-control" type="file" name="desenho" />
+        <span asp-validation-for="Desenho" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save</button>
+</form>
+
+<script>
+    (function () {
+        'use strict';
+        window.addEventListener('load', function () {
+            var forms = document.getElementsByClassName('needs-validation');
+            var validation = Array.prototype.filter.call(forms, function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (form.checkValidity() === false) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        }, false);
+    })();
+</script>
