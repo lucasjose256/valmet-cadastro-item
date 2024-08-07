@@ -1,34 +1,64 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - valmet_cadastro_item</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Layout com Sidebar</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/valmet_cadastro_item.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="~/css/sidebar.css">
 </head>
 <body>
-    <header>
-   
-
-      
-    </header>
-    <br />
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
-    <br />
-    <footer class="border-top footer text-muted">
-      
-            &copy; 2024 - valmet_cadastro_item - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-2 min-vh-100 bg-dark sidebar">
+                <div>
+                    <div class="pt-4 pb-1 px-2">
+                        <a href="#" class="menu-link">
+                            <i class="fas fa-bars fs-2"></i>
+                            <span class="fs-4 d-none d-sm-inline text-white">Menu</span>
+                        </a>
+                    </div>
+                    <hr class="text-white" />
+                    <ul id="sidebar-menu" class="nav nav-pills flex-column mb-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link active text-white">
+                                <i class="fas fa-home me-2"></i>
+                                <span class="d-none d-sm-inline">Home</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link text-white">
+                                <i class="fas fa-screwdriver-wrench me-2"></i>
+                                <span class="d-none d-sm-inline">Item</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link text-white">
+                                <i class="fas fa-brain me-2"></i>
+                                <span class="d-none d-sm-inline">Mestre</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="logout-btn px-2">
+                    <a href="#" class="btn btn-danger w-100">
+                        <i class="fas fa-arrow-right-from-bracket me-2"></i>
+                        Sair
+                    </a>
+                </div>
+            </div>
+            <div class="col">
+                <div class="container">
+                    <main role="main" class="pb-3">
+                        @RenderBody()
+                    </main>
+                </div>
+            </div>
         </div>
-    </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required: false)
+    </div>
+    <script src="~/js/sidebar.js"> </script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
